@@ -1,0 +1,41 @@
+[alias]
+  st = status
+  s = status --short -b
+  ci = commit
+  cm = commit -m
+  br = branch
+  co = checkout
+  df = diff
+  cp = cherry-pick 
+  cb = !git branch | grep ^* | cut -d' ' -f2
+  sb = !ls .git/refs/remotes/*/$(git cb) | cut -d/ -f4,5 | xargs git show-branch $(git cb)
+  
+  lp = log -p
+  l = log --oneline --decorate
+  lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  lg = log --all --graph --decorate --oneline
+  ll = log --stat --abbrev-commit
+  lo = log --stat --abbrev-commit --oneline
+  la = log -a --pretty=oneline
+  sl = shortlog -sn
+
+  dl = "!git ll -1"
+  dlc = diff --cached HEAD^
+  list-aliases = "!git config -l | grep alias | cut -c 7-"
+
+  ignore=!([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+
+  this = !git init && git add . && git commit -m \"Initial commit\"
+
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+
+  dump = cat-file -p
+  serve = !git daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+
+  undo=reset --hard
+
+[color]   
+  ui = auto # covers diff = true, status = auto, branch = auto
+  interactive = auto
